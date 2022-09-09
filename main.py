@@ -74,7 +74,7 @@ def etherscan_contracts(contracts_addresses):
         count_batch += 1
         if count_batch == 5:
             count_batch = 0
-            time.sleep(6)
+            time.sleep(6) # The API only support 5 request per second
     return contract_creator,txHash
 
 def create_dataframe(contracts_addresses,contracts_name,contract_creator,txHash):
@@ -89,9 +89,7 @@ def clean_Dataset(dataframe):
     return dataframe[dataframe['txHash'].notnull()]
 
 def load(dataframe):
-
     print(f"Uploading {dataframe.shape[0]} to db")
-
     cursor.execute('CREATE TABLE IF NOT EXISTS contracts (address VARCHAR(300), name VARCHAR(300), creator_address VARCHAR(300),txHash VARCHAR(300))')
 
     for index, row in dataframe.iterrows():
@@ -106,8 +104,8 @@ def load(dataframe):
 if __name__ == "__main__":
     coinbase_url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
     contracts = get_smart_contracts(coinbase_api_key,coinbase_url)
-    contracts_addresses,contracts_name = process_coinbase_data(contracts) 
-    contract_creator,txHash = etherscan_contracts(contracts_addresses)
+    contracts_addresses,contracts_name = process_coinbase_data(contracts) # return the smart contracts related to Tether in Coinbase
+    contract_creator,txHash = etherscan_contracts(contracts_addresses) # return the Contract craetor and txHash
     dataframe = create_dataframe(contracts_addresses,contracts_name,contract_creator,txHash)
     dataframe = clean_Dataset(dataframe)
     load(dataframe)
