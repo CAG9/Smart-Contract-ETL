@@ -1,5 +1,5 @@
 # Smart Contract ETL
- A ETL to extract contract's deployer address and transaction hash from return the smart contracts related to Tether in Coinbase
+ A ETL to extract contract's deployer address and transaction hash from the smart contracts related to Tether in Coinbase
 
 ## Requirements
 - Coinbase API
