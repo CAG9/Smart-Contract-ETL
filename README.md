@@ -6,6 +6,7 @@
 - Etherscan API 
 
 ## Tools and Technologies
+- Python 3
 - requests
 - json
 - pprint
