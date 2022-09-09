@@ -106,7 +106,7 @@ def load(dataframe):
 if __name__ == "__main__":
     coinbase_url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
     contracts = get_smart_contracts(coinbase_api_key,coinbase_url)
-    contracts_addresses,contracts_name = process_coinbase_data(contracts) # dataset1 contains:contracts_addresses and contracts_name
+    contracts_addresses,contracts_name = process_coinbase_data(contracts) 
     contract_creator,txHash = etherscan_contracts(contracts_addresses)
     dataframe = create_dataframe(contracts_addresses,contracts_name,contract_creator,txHash)
     dataframe = clean_Dataset(dataframe)
