@@ -3,7 +3,7 @@
 ## Result
 ![alt text](https://github.com/CAG9/Smart-Contract-ETL/blob/main/Smart-contract-Result.png)
 ## Requirements
-- Coinbase API
+- Coinmarketcap API
 - Etherscan API 
 
 ## Tools and Technologies
@@ -17,7 +17,7 @@
 - mysql.connector
 
 ## More info
-### Coinbase https://pro-api.coinmarketcap.com/v2/cryptocurrency/info
+### Coinmarketcap https://pro-api.coinmarketcap.com/v2/cryptocurrency/info
 Returns all static metadata available for one or more cryptocurrencies. This information includes details like logo, description, official website URL, social links, and links to a cryptocurrency's technical documentation.
 ### Etherscan Url
 Return a contract's deployer address and transaction hash it was craeted
