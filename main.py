@@ -6,12 +6,12 @@ import numpy as np
 import pandas as pd
 import mysql.connector
 
-import coinbase_key
+import coinmarketcap_key
 import etherscan_key
 import database
 
 
-coinbase_api_key = coinbase_key.KEY
+coinmarketcap_api_key = coinmarketcap_key.KEY
 etherscan_api_key = etherscan_key.KEY
 BASE_URL = "https://api.etherscan.io/api"
 my_db = mysql.connector.connect(host = 'localhost',
@@ -30,7 +30,7 @@ def make_url_etherscan(module, action, address, **kwargs):
         url += f"&{key}={value}"
     return url
 
-def get_smart_contracts(coinbase_api_key,url):
+def get_smart_contracts(coinmarketcap_api_key,url):
     url = url
     parameters = {
     'slug':"tether"
@@ -38,7 +38,7 @@ def get_smart_contracts(coinbase_api_key,url):
 
     headers = {
     'Accepts': 'application/json',
-    'X-CMC_PRO_API_KEY': coinbase_api_key
+    'X-CMC_PRO_API_KEY': coinmarketcap_api_key
     }
     session = Session()
     session.headers.update(headers)
@@ -46,7 +46,7 @@ def get_smart_contracts(coinbase_api_key,url):
     contracts = json.loads(response.text)
     return contracts
 
-def process_coinbase_data(contracts):
+def process_coinmarketcap_data(contracts):
     contracts_addresses = []
     contracts_name = []
     for contract in (contracts['data']['825']['contract_address']):
@@ -102,9 +102,9 @@ def load(dataframe):
 
 
 if __name__ == "__main__":
-    coinbase_url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
-    contracts = get_smart_contracts(coinbase_api_key,coinbase_url)
-    contracts_addresses,contracts_name = process_coinbase_data(contracts) # return the smart contracts related to Tether in Coinbase
+    coinmarketcap_url = 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/info'
+    contracts = get_smart_contracts(coinmarketcap_api_key,coinmarketcap_url)
+    contracts_addresses,contracts_name = process_coinmarketcap_data(contracts) # return the smart contracts related to Tether in Coinmarketcap
     contract_creator,txHash = etherscan_contracts(contracts_addresses) # return the Contract craetor and txHash
     dataframe = create_dataframe(contracts_addresses,contracts_name,contract_creator,txHash)
     dataframe = clean_Dataset(dataframe)
